@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Add this CSS to your global styles or Tailwind configuration */
+
+/* Keyframes for seamless auto-scrolling */
+@keyframes scrollLogos {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Apply the animation to the logo container */
+.logo-scroll-container {
+  position: relative;
+  width: 100%;
+}
+
+.logos {
+ 
+  animation: scrollLogos 20s linear infinite;
+ 
+}
+
+@media (max-width: 768px) {
+  .logos {
+    animation: scrollLogos 20s linear infinite;
+  }
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
