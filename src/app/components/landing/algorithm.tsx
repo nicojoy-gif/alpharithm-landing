@@ -67,7 +67,7 @@ const HeroSection = () => {
             className={`relative px-2 py-1 text-sm md:text-base font-semibold rounded-lg tracking-wide transition-all ${
               activeSection === section.id ? "bg-[#03217F] text-white shadow-md" : "bg-white text-gray-700"
             }`}
-            animate={{ scale: activeSection === section.id ? 1.2 : 1 }}
+            animate={{ scale: activeSection === section.id ? 1 : 1 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
           >
             {section.title}
@@ -85,9 +85,9 @@ const HeroSection = () => {
           <motion.div
             key={section.id}
             id={section.id}
-            className="scroll-section flex  items-center w-full md:min-w-[65vw]  bg-gray-100 rounded-lg shadow-lg snap-center"
+            className="scroll-section flex  items-center w-full md:min-w-[65vw]  bg-gray-100 rounded-lg shadow-md snap-center"
             initial={{ opacity: 0.5, scale: 0.9 }}
-            animate={{ opacity: activeSection === section.id ? 1 : 0.5, scale: activeSection === section.id ? 1 : 0.95 }}
+            animate={{ opacity: activeSection === section.id ? 1 : 0.3, scale: activeSection === section.id ? 1 : 0.85 }}
             transition={{ duration: 0.5 }}
           >
             {/* Text Content */}
