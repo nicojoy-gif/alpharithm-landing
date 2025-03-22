@@ -42,8 +42,9 @@ const HeroSection = () => {
       });
     }
   }, [activeSection]);
+
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center px-6 md:px-0 py-16">
+    <div className="min-h-screen bg-white flex flex-col items-center px-4 md:px-8 py-16">
       {/* Header */}
       <div className="w-full max-w-3xl text-center">
         <h1 className="text-3xl md:text-5xl font-semibold leading-tight text-gray-900">
@@ -55,7 +56,7 @@ const HeroSection = () => {
       </div>
 
       {/* Scrollable Tabs */}
-      <div ref={tabsRef} className="w-full max-w-4xl p-2 whitespace-nowrap mt-6 flex justify-between gap-4 overflow-x-auto scrollbar-hide border border-gray-300 rounded-lg ">
+      <div ref={tabsRef} className="w-full max-w-4xl justify-between flex gap-3 overflow-x-auto scrollbar-hide mt-6 border border-gray-300 rounded-lg p-2">
         {sections.map((section) => (
           <motion.button
             key={section.id}
@@ -64,59 +65,54 @@ const HeroSection = () => {
               setActiveSection(section.id);
               document.getElementById(section.id)?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
             }}
-            className={`relative px-2 py-1 text-sm md:text-base font-semibold rounded-lg tracking-wide transition-all ${
+            className={`relative px-4 py-2 text-sm md:text-base font-semibold rounded-lg transition-all whitespace-nowrap ${
               activeSection === section.id ? "bg-[#03217F] text-white shadow-md" : "bg-white text-gray-700"
             }`}
-            animate={{ scale: activeSection === section.id ? 1 : 1 }}
+            animate={{ scale: activeSection === section.id ? 1.05 : 1 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
           >
             {section.title}
-          
           </motion.button>
         ))}
       </div>
 
-      {/* Scrollable Horizontal Sections */}
+      {/* Scrollable Sections */}
       <div
         ref={containerRef}
-        className="w-full max-w-full flex overflow-x-auto scroll-smooth snap-x snap-mandatory mt-8 space-x-8 scrollbar-hide"
+        className="w-full max-w-6xl flex flex-col md:flex-row md:overflow-x-auto snap-x snap-mandatory mt-8 space-y-8 md:space-y-0 md:space-x-6 scrollbar-hide"
       >
         {sections.map((section) => (
           <motion.div
             key={section.id}
             id={section.id}
-            className="scroll-section flex  items-center w-full md:min-w-[65vw]  bg-gray-100 rounded-lg shadow-md snap-center"
+            className="scroll-section flex flex-col md:flex-row items-center w-full md:min-w-[50vw] bg-gray-100 rounded-lg shadow-md  snap-center"
             initial={{ opacity: 0.5, scale: 0.9 }}
             animate={{ opacity: activeSection === section.id ? 1 : 0.3, scale: activeSection === section.id ? 1 : 0.85 }}
             transition={{ duration: 0.5 }}
           >
             {/* Text Content */}
-            <div className=" px-8">
-              <h2 className="text-lg md:text-xl text-gray-600 font-semibold">
-                {section.title}
-              </h2>
-              <p className="text-gray-900 text-xl md:text-2xl lg:text-4xl xl:text-4xl mt-2 leading-snug">
-                {section.subtitle}
-              </p>
+            <div className="flex-1 p-6 text-center md:text-left">
+              <h2 className="text-lg md:text-xl text-gray-600 font-semibold">{section.title}</h2>
+              <p className="text-gray-900 text-lg md:text-xl mt-2 leading-snug">{section.subtitle}</p>
               <button className="mt-4 px-5 md:px-6 py-2 text-sm md:text-base bg-blue-700 text-white rounded-md hover:bg-blue-800 transition">
-                {section.buttonText}
+               Learn more
               </button>
             </div>
 
             {/* Image */}
             <motion.img
-                src={section.image}
-                alt={section.title}
-                className="w-[80%] md:w-[100%] mt-8 h-auto object-contain"
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.9, opacity: 0 }}
-                transition={{ duration: 0.5 }}
-                onClick={() => {
-                  setActiveSection(section.id);
-                  document.getElementById(section.id)?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-                }}
-              />
+              src={section.image}
+              alt={section.title}
+              className="w-[80%] md:w-[40%] mt-6  object-contain"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.5 }}
+              onClick={() => {
+                setActiveSection(section.id);
+                document.getElementById(section.id)?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+              }}
+            />
           </motion.div>
         ))}
       </div>
