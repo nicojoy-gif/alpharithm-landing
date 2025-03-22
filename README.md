@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Alpharithm Frontend Developer Test Assignment
 
-## Getting Started
+This is a responsive landing page built for the Alpharithm Frontend Developer test assignment. The project is developed using **Next.js (TypeScript)** and **Tailwind CSS** and deployed on **Vercel**.
 
-First, run the development server:
+## 🚀 Live Demo
+[View Deployment](https://alpharithm-landing.vercel.app/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 📌 Features
+- **Pixel-perfect design** implementation based on the provided Figma design.
+- **Responsive layout** adapting seamlessly across mobile, tablet, and desktop.
+- **Tab navigation system** for the "AI Models tailored for your business needs" section.
+- **Smooth transitions & animations** for an engaging user experience.
+- **Scroll and click interactions** to update active tabs dynamically.
+- **Optimized performance & accessibility** for a seamless user experience.
+
+## 🛠️ Technologies Used
+- **Next.js (TypeScript)**
+- **Tailwind CSS**
+- **Framer Motion** (for animations)
+- **Vercel** (for deployment)
+
+## 📂 Project Structure
+```
+/project-root
+ ├── public/             # Static assets (icons, images, etc.)
+ ├── src/
+ │   ├── components/     # Reusable UI components
+ │   ├── pages/          # Next.js pages
+ │   ├── styles/         # Global styles
+ │   ├── utils/          # Utility functions
+ ├── README.md
+ ├── package.json
+ ├── next.config.js
+ ├── tailwind.config.js
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📜 Installation & Running Locally
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Clone the repository:**
+   ```sh
+   git clone your-repo-url
+   cd project-folder
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. **Install dependencies:**
+   ```sh
+   npm install
+   ```
 
-## Learn More
+3. **Run the development server:**
+   ```sh
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) in your browser to see the project.
 
-To learn more about Next.js, take a look at the following resources:
+## 🚀 Deployment
+The project is deployed on **Vercel** for seamless hosting and performance optimization.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📝 Submission
+This project was built as part of the **Alpharithm Frontend Developer Test Assignment**. It meets all the specified requirements, including responsiveness, smooth animations, and interactive tab navigation.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
+**Author:** Orji Onyinyechi  
+**Email:** orjionyinyechi080@gmail.com  
+**GitHub:** https://github.com/nicojoy-gif/alpharithm-landing
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
