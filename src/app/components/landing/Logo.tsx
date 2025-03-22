@@ -13,30 +13,30 @@ const logos = [
 
 export const Logo = () => {
   return (
-    <div className="bg-white border-b">
-      <h3 className="text-gray-500 font-medium text-center py-4 text-sm md:text-base">
+    <div className=" bg-white border-b">
+      <h3 className="text-lightgray font-medium text-center py-4">
         Join 4,000+ companies already growing
       </h3>
-      <div className="w-full overflow-hidden bg-white">
+      <div className="w-full overflow-hidden bg-white ">
         <div className="relative w-full py-4 overflow-hidden whitespace-nowrap">
           <motion.div
-            initial={{ x: "100%" }}
+            initial={{ x: 0 }}
             animate={{ x: "-100%" }}
-            transition={{ repeat: Infinity, duration: 1500, ease: "linear" }}
-            className="flex items-center space-x-8 md:space-x-12 lg:space-x-24 xl:space-x-56  w-max"
+            transition={{ repeat: Infinity, duration: 1000, ease: "linear" }}
+            className="flex items-center space-x-20 w-max"
           >
             {/* Generate unlimited logos dynamically */}
             {Array.from({ length: 10 })
               .flatMap(() => logos)
               .map((item, index) => (
-                <div key={index} className="flex items-center">
+                <div key={index} className="flex items-center xl:space-x-[30%]">
                   <Image
                     src={item.logo}
                     alt={item.name}
-                    width={140}
-                    height={40}
+                    width={186}
+                    height={48}
                     priority
-                    className="object-contain w-[100px] h-auto md:w-[140px]"
+                    className="object-contain"
                   />
                 </div>
               ))}
@@ -45,4 +45,4 @@ export const Logo = () => {
       </div>
     </div>
   );
-};
+}; 

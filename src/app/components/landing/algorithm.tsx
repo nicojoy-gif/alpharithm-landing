@@ -1,127 +1,124 @@
 "use client";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import Image from "next/image";
 
 const sections = [
-  {
-    id: "market",
-    title: "Market Prediction",
-    subtitle:
-      "Use AI insights for smarter business decisions and stay competitive.",
-    buttonText: "Learn More",
-    image: "/market.svg",
-  },
-  {
-    id: "finance",
-    title: "Finance",
-    subtitle: "Our AI models analyze financial data for confident investments.",
-    buttonText: "Get Started",
-    image: "/finance.svg",
-  },
-  {
-    id: "analytics",
-    title: "Data Analytics",
-    subtitle:
-      "Transform data into insights with AI analytics that enhance decisions.",
-    buttonText: "Explore",
-    image: "/analytics.svg",
-  },
-  {
-    id: "content",
-    title: "Content Generation",
-    subtitle:
-      "Create quality content easily with AI that knows your brand and audience.",
-    buttonText: "Try Now",
-    image: "/content.svg",
-  },
-  {
-    id: "support",
-    title: "Customer Support",
-    subtitle: "Use AI chatbots for instant, personalized customer support.",
-    buttonText: "See",
-    image: "/customer.svg",
-  },
+  { id: "market", title: "Market Prediction", subtitle: "Use AI insights for smarter business decisions and stay competitive.", buttonText: "Learn More", image: "/market.svg" },
+  { id: "finance", title: "Finance", subtitle: "Our AI models analyze financial data for confident investments.", buttonText: "Get Started", image: "/finance.svg" },
+  { id: "analytics", title: "Data Analytics", subtitle: "Transform data into insights with AI analytics that enhance decisions.", buttonText: "Explore", image: "/analytics.svg" },
+  { id: "content", title: "Content Generation", subtitle: "Create quality content easily with AI that knows your brand and audience.", buttonText: "Try Now", image: "/content.svg" },
+  { id: "support", title: "Customer Support", subtitle: "Use AI chatbots for instant, personalized customer support.", buttonText: "See", image: "/customer.svg" },
 ];
 
 const HeroSection = () => {
   const [activeSection, setActiveSection] = useState(sections[0].id);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const tabsRef = useRef<HTMLDivElement>(null);
 
-  const activeIndex = sections.findIndex((section) => section.id === activeSection);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleSection = entries.find((entry) => entry.isIntersecting);
+        if (visibleSection) {
+          setActiveSection(visibleSection.target.id);
+        }
+      },
+      { threshold: 0.6, root: containerRef.current, rootMargin: "0px" }
+    );
 
+    const sectionElements = document.querySelectorAll(".scroll-section");
+    sectionElements.forEach((section) => observer.observe(section));
+
+    return () => sectionElements.forEach((section) => observer.unobserve(section));
+  }, []);
+
+  useEffect(() => {
+    const activeTab = document.getElementById(`tab-${activeSection}`);
+    if (activeTab && tabsRef.current) {
+      tabsRef.current.scrollTo({
+        left: activeTab.offsetLeft - tabsRef.current.offsetWidth / 2 + activeTab.offsetWidth / 2,
+        behavior: "smooth",
+      });
+    }
+  }, [activeSection]);
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center px-6 md:px-12 py-16">
-      {/* Header Text */}
+    <div className="min-h-screen bg-white flex flex-col items-center px-6 md:px-0 py-16">
+      {/* Header */}
       <div className="w-full max-w-3xl text-center">
-        <h1 className="text-3xl md:text-5xl font-semibold leading-tight text-dark-400">
+        <h1 className="text-3xl md:text-5xl font-semibold leading-tight text-gray-900">
           AI Models Tailored for Your Business Needs
         </h1>
-        <p className="text-base md:text-xl text-lightergray mt-4">
-          Leverage the power of AI to automate, analyze, and optimize your workflows. 
-          Our specialized models are designed to fit different business needs.
+        <p className="text-base md:text-xl text-gray-600 mt-4">
+          Leverage AI to automate, analyze, and optimize your workflows.
         </p>
       </div>
 
-      {/* Tabs Navigation */}
-      <div className="w-full max-w-5xl mt-6 overflow-x-auto scrollbar-hide">
-        <div className="relative flex justify-between border border-lightgrey rounded-lg p-2 overflow-auto">
-          {sections.map((section) => (
-            <button
-              key={section.id}
-              onClick={() => setActiveSection(section.id)}
-              className={`relative px-4 py-2 text-sm md:text-base rounded-xl font-semibold tracking-wide transition-colors whitespace-nowrap
-                ${activeSection === section.id ? "text-dark-300" : "text-gray-700"}`}
-            >
-              {section.title}
-              {activeSection === section.id && (
-                <motion.div
-                  className="absolute bottom-0 left-0 w-full h-1 bg-dark-300 rounded-lg"
-                  layoutId="underline"
-                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                />
-              )}
-            </button>
-          ))}
-        </div>
+      {/* Scrollable Tabs */}
+      <div ref={tabsRef} className="w-full max-w-4xl p-2 whitespace-nowrap mt-6 flex justify-between gap-4 overflow-x-auto scrollbar-hide border border-gray-300 rounded-lg ">
+        {sections.map((section) => (
+          <motion.button
+            key={section.id}
+            id={`tab-${section.id}`}
+            onClick={() => {
+              setActiveSection(section.id);
+              document.getElementById(section.id)?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+            }}
+            className={`relative px-2 py-1 text-sm md:text-base font-semibold rounded-lg tracking-wide transition-all ${
+              activeSection === section.id ? "bg-[#03217F] text-white shadow-md" : "bg-white text-gray-700"
+            }`}
+            animate={{ scale: activeSection === section.id ? 1.2 : 1 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          >
+            {section.title}
+          
+          </motion.button>
+        ))}
       </div>
 
-      {/* Active Section Content */}
-      <div className="flex justify-center items-center mt-8 w-full max-w-5xl">
-        <AnimatePresence mode="wait">
+      {/* Scrollable Horizontal Sections */}
+      <div
+        ref={containerRef}
+        className="w-full max-w-full flex overflow-x-auto scroll-smooth snap-x snap-mandatory mt-8 space-x-8 scrollbar-hide"
+      >
+        {sections.map((section) => (
           <motion.div
-            key={activeSection}
-            className="flex flex-col md:flex-row items-center w-full bg-[#F6FAF3] rounded-lg shadow-lg p-6 md:p-0"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
+            key={section.id}
+            id={section.id}
+            className="scroll-section flex  items-center w-full md:min-w-[65vw]  bg-gray-100 rounded-lg shadow-lg snap-center"
+            initial={{ opacity: 0.5, scale: 0.9 }}
+            animate={{ opacity: activeSection === section.id ? 1 : 0.5, scale: activeSection === section.id ? 1 : 0.95 }}
             transition={{ duration: 0.5 }}
           >
-            {/* Left Side - Text */}
-            <div className="md:w-1/2 text-center px-8 md:text-left">
-              <h2 className="text-lg md:text-xl text-lightergray font-semibold">
-                {sections[activeIndex].title}
+            {/* Text Content */}
+            <div className=" px-8">
+              <h2 className="text-lg md:text-xl text-gray-600 font-semibold">
+                {section.title}
               </h2>
-              <p className="text-dark-400 text-xl md:text-2xl mt-2 leading-snug">
-                {sections[activeIndex].subtitle}
+              <p className="text-gray-900 text-xl md:text-2xl lg:text-4xl xl:text-4xl mt-2 leading-snug">
+                {section.subtitle}
               </p>
-              <button className="mt-4 px-5 md:px-6 py-2 text-sm md:text-base bg-[#03217F] text-white rounded-md hover:bg-blue-700 transition">
-                {sections[activeIndex].buttonText}
+              <button className="mt-4 px-5 md:px-6 py-2 text-sm md:text-base bg-blue-700 text-white rounded-md hover:bg-blue-800 transition">
+                {section.buttonText}
               </button>
             </div>
 
-            {/* Right Side - Image */}
-            <div className="flex justify-center md:w-1/2 mt-6 md:mt-0">
-              <motion.img
-                src={sections[activeIndex].image}
-                alt={sections[activeIndex].title}
+            {/* Image */}
+            <motion.img
+                src={section.image}
+                alt={section.title}
                 className="w-[80%] md:w-[100%] mt-8 h-auto object-contain"
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.9, opacity: 0 }}
                 transition={{ duration: 0.5 }}
+                onClick={() => {
+                  setActiveSection(section.id);
+                  document.getElementById(section.id)?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+                }}
               />
-            </div>
           </motion.div>
-        </AnimatePresence>
+        ))}
       </div>
     </div>
   );
